@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,7 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::limit(20)->get(); //prendo solo 20 post
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
