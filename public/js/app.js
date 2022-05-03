@@ -49796,6 +49796,19 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+var buttons = document.querySelectorAll('.delete-form [type="submit"]');
+buttons.forEach(function (element) {
+  element.addEventListener('click', function (el) {
+    el.preventDefault();
+    var btn = el.target;
+    var form = btn.closest('.delete-form');
+    console.log(form);
+
+    if (form && confirm('Do you really want to delete this post?')) {
+      form.submit();
+    }
+  });
+});
 
 /***/ }),
 

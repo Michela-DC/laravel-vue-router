@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -15,7 +14,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
         $posts = Post::orderBy('created_at', 'desc')->limit(20)->get(); //ordino i post per ordine di creazione e prendo solo 20 post
 
         return view('admin.posts.index', compact('posts'));
