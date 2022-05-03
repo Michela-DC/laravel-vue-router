@@ -3,7 +3,18 @@
 @section('content')
 
     <div class="container">
-        <h1>Edit post: {{ $post->title }}</h1>
+        <div class="row">
+            <div class="col-10">
+                <h1>Edit post: {{ $post->title }}</h1>
+            </div>
+            <div class="col-2">
+                <form class="delete-form text-right" action="{{route('admin.posts.destroy', $post)}}" method="POST">
+                    @csrf {{-- il token di sicurezza va sempre messo nei form --}}
+                    @method('DELETE')
+                    <button class="btn btn-danger" type="submit" >Delete</button>
+                </form>
+            </div>
+        </div>
     </div>
     
     <div class="container">

@@ -30,6 +30,13 @@
                             <a class="btn btn-outline-success" href="{{ route('admin.posts.edit', $post) }}">Edit</a> 
                             {{-- gli devo passare il parametro per specificare a quale post si riferisce, potrei anche scriverlo $post->id --}}
                         </td>
+                        <td>
+                            <form class="delete-form" action="{{route('admin.posts.destroy', $post)}}" method="POST">
+                                @csrf {{-- il token di sicurezza va sempre messo nei form --}}
+                                @method('DELETE')
+                                <button class="btn btn-danger my-submit p-2 rounded" type="submit" >Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
