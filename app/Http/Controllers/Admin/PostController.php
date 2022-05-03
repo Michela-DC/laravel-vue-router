@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::limit(20)->get(); //prendo solo 20 post
+        $posts = Post::orderBy('created_at', 'desc')->createlimit(20)->get(); //ordino i post per ordine di creazione e prendo solo 20 post
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -27,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**

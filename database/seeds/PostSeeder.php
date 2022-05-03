@@ -21,7 +21,8 @@ class PostSeeder extends Seeder
             $post->title = $faker->words(7,true); // con true restituisce la stringa composta da 7 parole
             $post->slug = Str::slug($post->title); //per generare lo slug a partire dal titolo posso usare l'helper Str::slug. Come parametro gli passo il titolo e non è necessario specificare il trattino come separatore perché lo è di default
             $post->content = $faker->paragraphs(10, true);
-            $post->published_at = $faker->randomElement([null, $faker->dateTime()]); //gli dico di scegliere a caso tra un valore nullo e una data
+            $post->published_at = $faker->optional()->dateTime(); //gli dico di scegliere a caso tra un valore nullo e una data
+            // altro modo $post->published_at = $faker->randomElement([null, $faker->dateTime()]); 
 
             $post->save();
             
