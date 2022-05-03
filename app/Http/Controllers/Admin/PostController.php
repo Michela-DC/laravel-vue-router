@@ -47,23 +47,8 @@ class PostController extends Controller
 
         $data = $request->all();
 
-        //genero lo slug partendo dal titolo, quindi all'helper Str::slug passo il titolo e non c`è bisogno di passargli il trattino come altro parametro perchè lo aggiunge di default
-        $slug = Str::slug( $data['title'] ); 
-        $slug_base = $slug;
-
-        $counter = 1; //mi creo un contatore
-
-        // Prendo il primo post che trova con lo stesso slug del post che sto creando
-        $post_present = Post::where('slug',$slug)->first();
-
-        // se lo trova allora nel while, finchè non genera uno slug che sia unico, ne crea uno nuovo concatenando lo slug già presente al contatore che incrementa ad ogni giro, poi ricontrolla nuovamente se ne trova uno con lo stesso nome.
-        while( $post_present ) {
-
-            $slug = $slug_base . '-' . $counter;
-            $counter++;
-
-            $post_present = Post::where('slug',$slug)->first();
-        } 
+        $slug = Post::getUniqueSlug($data['title']); //uso un metodo statico che creo io e la cui logica è nel model
+        // dd($slug);
 
         $post = new Post; //Dopo aver fatto il controllo sullo slug posso creare il nuovo post
         $post->fill($data); //popolo la nuova istanza del Model con i dati ricevuti, e per usare il fill devo creare nel model un array protected con i campi da popolare
@@ -107,27 +92,12 @@ class PostController extends Controller
 
         // Se il titolo originale è diverso da quello che viene passato dall'edit devo generare il nuovo slug in base al nuovo titolo inserito
         if( $post->title != $data['title']){
-            //genero lo slug partendo dal titolo, quindi all'helper Str::slug passo il titolo e non c`è bisogno di passargli il trattino come altro parametro perchè lo aggiunge di default
-            $slug = Str::slug( $data['title'] ); 
-            $slug_base = $slug;
 
-            $counter = 1; //mi creo un contatore
+            $slug = Post::getUniqueSlug($data['title']);
 
-            // Prendo il primo post che trova con lo stesso slug del post che sto creando
-            $post_present = Post::where('slug',$slug)->first();
-
-            // se lo trova allora nel while, finchè non genera uno slug che sia unico, ne crea uno nuovo concatenando lo slug già presente al contatore che incrementa ad ogni giro, poi ricontrolla nuovamente se ne trova uno con lo stesso nome.
-            while( $post_present ) {
-
-                $slug = $slug_base . '-' . $counter;
-                $counter++;
-
-                $post_present = Post::where('slug',$slug)->first();
-            }
+            $data['slug'] = $slug; // $data è un array associativo quindi posso passare così il nuovo slug al database
+            //Bisogna anche aggiungere lo slug all'array fillable nel model perchè altrimenti non lo aggiorna   
         }
-
-        $data['slug'] = $slug; // $data è un array associativo quindi posso fare così per passare il nuovo slug al database
-        //Bisogna anche aggiungere lo slug all'array fillable nel model perchè altrimenti non lo aggiorna
 
         $post->update($data);
 
