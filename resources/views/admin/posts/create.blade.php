@@ -3,7 +3,8 @@
 @section('content')
     
     <div class="container">
-        <form action="">
+        <form action="{{ route('admin.posts.store') }}" method="POST">
+            @csrf 
 
             <div class="form-group">
               <label for="title">Title</label>
