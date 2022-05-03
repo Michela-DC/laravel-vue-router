@@ -63,7 +63,7 @@ class PostController extends Controller
             $counter++;
 
             $post_present = Post::where('slug',$slug)->first();
-        }
+        } 
 
         $post = new Post; //Dopo aver fatto il controllo sullo slug posso creare il nuovo post
         $post->fill($data); //popolo la nuova istanza del Model con i dati ricevuti, e per usare il fill devo creare nel model un array protected con i campi da popolare
@@ -75,16 +75,7 @@ class PostController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    // in questo caso non creo lo show perché in wordpress lo show sarebbe l'anteprima del post che possono vedere tutti gli utenti
 
     /**
      * Show the form for editing the specified resource.
@@ -92,9 +83,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -104,9 +95,43 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:150',
+            'content' => 'required|string',
+            'published_at' => 'nullable|date|before_or_equal:today'
+        ]);
+
+        $data = $request->all();
+
+        // Se il titolo originale è diverso da quello che viene passato dall'edit devo generare il nuovo slug in base al nuovo titolo inserito
+        if( $post->title != $data['title']){
+            //genero lo slug partendo dal titolo, quindi all'helper Str::slug passo il titolo e non c`è bisogno di passargli il trattino come altro parametro perchè lo aggiunge di default
+            $slug = Str::slug( $data['title'] ); 
+            $slug_base = $slug;
+
+            $counter = 1; //mi creo un contatore
+
+            // Prendo il primo post che trova con lo stesso slug del post che sto creando
+            $post_present = Post::where('slug',$slug)->first();
+
+            // se lo trova allora nel while, finchè non genera uno slug che sia unico, ne crea uno nuovo concatenando lo slug già presente al contatore che incrementa ad ogni giro, poi ricontrolla nuovamente se ne trova uno con lo stesso nome.
+            while( $post_present ) {
+
+                $slug = $slug_base . '-' . $counter;
+                $counter++;
+
+                $post_present = Post::where('slug',$slug)->first();
+            }
+        }
+
+        $data['slug'] = $slug; // $data è un array associativo quindi posso fare così per passare il nuovo slug al database
+        //Bisogna anche aggiungere lo slug all'array fillable nel model perchè altrimenti non lo aggiorna
+
+        $post->update($data);
+
+        return redirect()->route('admin.posts.index');
     }
 
     /**
