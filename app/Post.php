@@ -12,11 +12,12 @@ class Post extends Model
         'content',
         'published_at',
         'slug',
+        'category_id'
     ];
 
     // Per specificare che più categorie sono collegate ad un post:
-    // inseriamo nel Model secondario Post il metodo user() che rappresenta la relazione di dipendenza verso il Model principale (in questo caso è Post).
-    public function user() {
+    // inseriamo nel Model secondario Post il metodo category() che rappresenta la relazione di dipendenza verso il Model principale (in questo caso è Post).
+    public function category() {
         //mappiamo la relazione inversa usando il metodo belongsTo().
         return $this->belongsTo('App\Category');
     }

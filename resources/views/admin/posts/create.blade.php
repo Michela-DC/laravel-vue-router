@@ -20,7 +20,21 @@
             </div>
 
             <div class="form-group">
-                <label for="content">Title</label>
+                <label for="category_id">Category</label>
+                <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
+                  <option value=""> -- none --</option>
+                  @foreach ($categories as $category)
+                    <option  {{ old('category_id') == $category->id ? 'selected' : ''}} value="{{ $category->id }}">{{ $category->name }}</option>  
+                  @endforeach
+                </select>
+
+                @error('category_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content</label>
                 <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" placeholder="Enter content" cols="30" rows="10">{{ old('content') }}</textarea>
               
                 @error('content')
@@ -37,7 +51,7 @@
                 @enderror
             </div>
   
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Create</button>
           </form>
     </div>
 

@@ -13,6 +13,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Slug</th>
+                <th scope="col">Category</th>
                 <th scope="col">Publication date</th>
                 <th scope="col">Creation date</th>
               </tr>
@@ -24,8 +25,10 @@
                         <td>{{ $post->id}}</td>
                         <td>{{ $post->title}}</td>
                         <td>{{ $post->slug}}</td>
+                        {{-- Devo controllare se la categoria esiste, se sì allora stampo il nome altrimenti niente --}}
+                        <td>{{ $post->category ? $post->category->name : '/'}}</td> 
                         <td>{{ $post->published_at}}</td>
-                        <td>{{ $post->creeated_at}}</td>
+                        <td>{{ $post->created_at}}</td>
                         <td>
                             <a class="btn btn-outline-success" href="{{ route('admin.posts.edit', $post) }}">Edit</a> 
                             {{-- gli devo passare il parametro per specificare a quale post si riferisce, potrei anche scriverlo $post->id --}}

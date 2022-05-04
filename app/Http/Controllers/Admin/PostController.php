@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Category;//importo anche il namespace di category dato che lo uso nella create
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,8 +15,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        $posts = Post::orderBy('created_at', 'desc')->limit(20)->get(); //ordino i post per ordine di creazione e prendo solo 20 post
+    {  
+        // -> https://laravel.com/docs/7.x/eloquent-relationships#eager-loading
+        // invece di far fare la query nel frontend per chiedere di recuperare la category di ogni post, uso il method with per far la query solo una volta quando recupero i post, 
+        // passandogli il nome della funzione della relazione che ho nel model Post. In  questo modo il frontend avrà già l'informazione e non dovrà fare la query ad ogni stampa
+        $posts = Post::with('category')->orderBy('created_at', 'desc')->limit(20)->get(); //ordino i post per ordine di creazione e prendo solo 20 post
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -27,7 +31,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -41,7 +47,9 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|string|max:150',
             'content' => 'required|string',
-            'published_at' => 'nullable|date|before_or_equal:today'
+            'published_at' => 'nullable|date|before_or_equal:today',
+            //con nullable acceta se l'id non viene inserito, quindi non viene scelta nessuna categoria
+            //ma se viene scelta allora controlla con exists che sia un id esistente nella tabella, https://laravel.com/docs/7.x/validation#rule-exists
         ]);
 
         $data = $request->all();
@@ -69,7 +77,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -84,7 +94,8 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|string|max:150',
             'content' => 'required|string',
-            'published_at' => 'nullable|date|before_or_equal:today'
+            'published_at' => 'nullable|date|before_or_equal:today',
+            'category_id' => 'nullable|exists:categories,id' 
         ]);
 
         $data = $request->all();
