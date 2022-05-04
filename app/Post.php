@@ -14,6 +14,14 @@ class Post extends Model
         'slug',
     ];
 
+    // Per specificare che più categorie sono collegate ad un post:
+    // inseriamo nel Model secondario Post il metodo user() che rappresenta la relazione di dipendenza verso il Model principale (in questo caso è Post).
+    public function user() {
+        //mappiamo la relazione inversa usando il metodo belongsTo().
+        return $this->belongsTo('App\Category');
+    }
+    
+
     public static function getUniqueSlug($title) { //uso static per specificare che è un metodo statico
 
         //genero lo slug partendo dal titolo, quindi all'helper Str::slug passo un parametro che, quando userò questa funzione,  sarà il titolo  
