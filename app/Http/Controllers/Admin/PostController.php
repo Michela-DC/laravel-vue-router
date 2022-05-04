@@ -48,6 +48,7 @@ class PostController extends Controller
             'title' => 'required|string|max:150',
             'content' => 'required|string',
             'published_at' => 'nullable|date|before_or_equal:today',
+            'category_id' => 'nullable|exists:categories,id' 
             //con nullable acceta se l'id non viene inserito, quindi non viene scelta nessuna categoria
             //ma se viene scelta allora controlla con exists che sia un id esistente nella tabella, https://laravel.com/docs/7.x/validation#rule-exists
         ]);

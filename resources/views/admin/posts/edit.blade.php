@@ -68,6 +68,7 @@
             </div>
   
             <button for="edit" type="submit" class="btn btn-primary">Save changes</button>
+            {{-- con for=edit specifico che questo bottone si riferisce al form cin id=edit --}}
           </form>
     </div>
 
