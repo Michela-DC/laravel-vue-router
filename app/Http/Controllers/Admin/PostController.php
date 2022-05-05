@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post;
-use App\Category;//importo anche il namespace di category dato che lo uso nella create
+use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -50,7 +51,7 @@ class PostController extends Controller
             'published_at' => 'nullable|date|before_or_equal:today',
             'category_id' => 'nullable|exists:categories,id' 
             //con nullable acceta se l'id non viene inserito, quindi non viene scelta nessuna categoria
-            //ma se viene scelta allora controlla con exists che sia un id esistente nella tabella, https://laravel.com/docs/7.x/validation#rule-exists
+            //ma se viene scelta allora controlla con exists che sia esistente nella tabella categories, nella colonna id, https://laravel.com/docs/7.x/validation#rule-exists
         ]);
 
         $data = $request->all();
@@ -79,8 +80,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::orderBy('name')->get();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -96,10 +98,12 @@ class PostController extends Controller
             'title' => 'required|string|max:150',
             'content' => 'required|string',
             'published_at' => 'nullable|date|before_or_equal:today',
-            'category_id' => 'nullable|exists:categories,id' 
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'exists:tags,id',
         ]);
 
         $data = $request->all();
+        // dd($data);
 
         // Se il titolo originale è diverso da quello che viene passato dall'edit devo generare il nuovo slug in base al nuovo titolo inserito
         if( $post->title != $data['title']){
@@ -109,6 +113,20 @@ class PostController extends Controller
             $data['slug'] = $slug; // $data è un array associativo quindi posso passare così il nuovo slug al database
             //Bisogna anche aggiungere lo slug all'array fillable nel model perchè altrimenti non lo aggiorna   
         }
+
+        /* da tags dovrebbe arrivare un array di tags però se non viene selezionato nessun tag allora la voce tags non sarà presente, 
+        quindi devo fare un controllo in cui se tags è presente allora lo passo a sync, altrimenti gli passo un array vuoto */
+        if( array_key_exists('tags', $data) ){
+
+            $post->tags()->sync( $data['tags'] ); //veranno aggiunti nella tabella pivot i tags selezionati
+
+        }else{
+
+            $post->tags()->sync([]); //in questo modo il post non avrà tags collegati, quindi entra in azione il onDelete('cascade') e il collegamento iniziale nella tabella pivot, tra il post e i tag, viene eliminato
+            // oppure avrei potuto non passare niente con il parametro detach che rimuove le relazione esistenti
+            //$post->tags()->detach();
+        }
+
 
         $post->update($data);
 
