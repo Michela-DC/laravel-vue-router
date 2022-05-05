@@ -15,11 +15,11 @@ class CategorySeeder extends Seeder
     {
         
         $categories = [
-           'science', 
-           'environment', 
-           'tecnology', 
-           'culture', 
-           'education',
+           'Starters', 
+           'First courses', 
+           'Second courses', 
+           'Side dishes', 
+           'Desserts',
         ];
 
         foreach($categories as $category_name){
