@@ -19,7 +19,7 @@ class PostController extends Controller
         // -> https://laravel.com/docs/7.x/eloquent-relationships#eager-loading
         // invece di far fare la query nel frontend per chiedere di recuperare la category di ogni post, uso il method with per far la query solo una volta quando recupero i post, 
         // passandogli il nome della funzione della relazione che ho nel model Post. In  questo modo il frontend avrà già l'informazione e non dovrà fare la query ad ogni stampa
-        $posts = Post::with('category')->orderBy('created_at', 'desc')->limit(20)->get(); //ordino i post per ordine di creazione e prendo solo 20 post
+        $posts = Post::with('category','tags')->orderBy('created_at', 'desc')->limit(20)->get(); //ordino i post per ordine di creazione e prendo solo 20 post
 
         return view('admin.posts.index', compact('posts'));
     }
