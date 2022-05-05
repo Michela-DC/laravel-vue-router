@@ -33,8 +33,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::orderBy('name')->get();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -49,9 +50,9 @@ class PostController extends Controller
             'title' => 'required|string|max:150',
             'content' => 'required|string',
             'published_at' => 'nullable|date|before_or_equal:today',
-            'category_id' => 'nullable|exists:categories,id' 
-            //con nullable acceta se l'id non viene inserito, quindi non viene scelta nessuna categoria
+            'category_id' => 'nullable|exists:categories,id', //con nullable acceta se l'id non viene inserito, quindi non viene scelta nessuna categoria
             //ma se viene scelta allora controlla con exists che sia esistente nella tabella categories, nella colonna id, https://laravel.com/docs/7.x/validation#rule-exists
+            'tags' => 'exists:tags,id',
         ]);
 
         $data = $request->all();
@@ -65,6 +66,15 @@ class PostController extends Controller
 
         $post->save();
 
+        //il controllo di tags lo devo mettere dopo che il post è stato creato e salvato altrimenti non trova $post
+        if( array_key_exists('tags', $data) ){
+
+            $post->tags()->sync( $data['tags'] ); 
+
+        }else{
+            $post->tags()->sync([]); 
+        }
+        
         return redirect()->route('admin.posts.index');
 
     }
@@ -126,7 +136,6 @@ class PostController extends Controller
             // oppure avrei potuto non passare niente con il parametro detach che rimuove le relazione esistenti
             //$post->tags()->detach();
         }
-
 
         $post->update($data);
 
