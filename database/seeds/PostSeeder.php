@@ -1,6 +1,7 @@
 <?php
 
 use App\Post;
+use App\Tag;
 use App\Category;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
@@ -20,6 +21,9 @@ class PostSeeder extends Seeder
         $categoriesId = $categories->pluck('id')->all(); //The pluck method retrieves all of the values for a given key
         // questo pluck funziona se il seeder delle category viene lanciato prima del seeder dei post
 
+        $tags = Tag::all();
+        $tagsId = $tags->pluck('id')->all();
+
         for ($i=0; $i < 100; $i++) { 
 
             $post = new Post();
@@ -31,8 +35,14 @@ class PostSeeder extends Seeder
             // altro modo $post->published_at = $faker->randomElement([null, $faker->dateTime()]); 
             $post->category_id = $faker->optional()->randomElement($categoriesId); 
 
+            $randomTags = $faker->randomElements( $tagsId, 2); //recupero 2 id di tags
+
             $post->save();
             
+            $post->tags()->attach($randomTags); //tags() è la relazione, quindi a post che ha la relazione con tag, gli attacco gli id che ho recuperato di tag -> in questo modo vado a popolare la tabella pivot
+            //qui vado a collegare l'id dei tag all'id dei post, per questo va messo dopo il save, dato che solo dopo aver creato e salvato il post avrò il suo id
+            //avendo usato randomTags, in cui recupero 2 id di tags, allora per ad ogni post saranno collegati 2 id di tags
+
         }
     }
 }

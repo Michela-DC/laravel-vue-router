@@ -15,9 +15,15 @@ class Post extends Model
         'category_id'
     ];
 
+
     // Funzione per specificare che più posts possono essere collegati a una unica categoria
     public function category() {
         return $this->belongsTo('App\Category');
+    }
+
+    //relazione con tags è many to many 
+    public function tags() { 
+        return $this->belongsToMany('App\Tag');
     }
     
 
@@ -39,6 +45,7 @@ class Post extends Model
             $counter++;
 
             $post_present = Post::where('slug',$slug)->first();
+
         }
 
         return $slug;
