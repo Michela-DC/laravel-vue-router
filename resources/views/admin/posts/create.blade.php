@@ -39,19 +39,20 @@
             <div class="form-group">
                 <h5 class="py-1" style="font-size: 0.9rem">Tags</h5>
                 <div class="d-flex" style="gap: 1.2rem;">
-                    @foreach ($tags as $tag)
+                    @foreach ($tags as $index => $tag)
                         <div class="form-check">
                             {{-- a differenza dell'edit, qui non metto dei tags con già il checked perchè sto creando un nuovo post --}}
-                            <input class="form-check-input @error('content') is-invalid @enderror" type="checkbox" value="{{ $tag->id }}" name="tags[]" id="tags-{{ $tag->id }}"> 
+                            <input class="form-check-input @error('content') is-invalid @enderror" type="checkbox" value="{{ $tag->id }}" name="tags[{{$index}}]" id="tags-{{ $tag->id }}"> 
                             <label class="form-check-label" for="tags-{{ $tag->id }}">
                                 {{ $tag->name }}
                             </label>
                         </div>
+
+                        @error('tags.{{$index}}') 
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     @endforeach
                 </div>
-                @error('tags')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
             </div>
 
             {{-- content --}}
