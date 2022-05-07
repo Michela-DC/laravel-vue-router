@@ -21,6 +21,7 @@ class PostController extends Controller
         // invece di far fare la query nel frontend per chiedere di recuperare la category di ogni post, uso il method with per far la query solo una volta quando recupero i post, 
         // passandogli il nome della funzione della relazione che ho nel model Post. In  questo modo il frontend avrà già l'informazione e non dovrà fare la query ad ogni stampa
         $posts = Post::with('category','tags')->orderBy('created_at', 'desc')->limit(20)->get(); //ordino i post per ordine di creazione e prendo solo 20 post
+        // category e tags sono i nomi delle funzioni che creano la relazione con post
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -52,7 +53,7 @@ class PostController extends Controller
             'published_at' => 'nullable|date|before_or_equal:today',
             'category_id' => 'nullable|exists:categories,id', //con nullable acceta se l'id non viene inserito, quindi non viene scelta nessuna categoria
             //ma se viene scelta allora controlla con exists che sia esistente nella tabella categories, nella colonna id, https://laravel.com/docs/7.x/validation#rule-exists
-            'tags' => 'exists:tags,id',
+            'tags.*' => 'exists:tags,id', // aggiungendo .* a tags, va a fare la validazione sui singoli elementi invece di farli su tutto l'array 
         ]);
 
         $data = $request->all();
@@ -109,7 +110,7 @@ class PostController extends Controller
             'content' => 'required|string',
             'published_at' => 'nullable|date|before_or_equal:today',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'exists:tags,id',
+            'tags.*' => 'exists:tags,id',
         ]);
 
         $data = $request->all();

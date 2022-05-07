@@ -54,24 +54,25 @@
             <div class="form-group">
                 <h5 class="py-1" style="font-size: 0.9rem">Tags</h5>
                 <div class="d-flex" style="gap: 1.2rem;">
-                    @foreach ($tags as $tag)
+                    @foreach ($tags as $index => $tag)
                         <div class="form-check">
                             {{-- Per selezionare una checkbox devo dare l'attributo checked. I tag che devono essere già selezionati sono quelli che sono già collegati al post,
                             quindi, per mostrarli già selezionati, devo controllare se il $tag del loop è incluso nel tag del post a cui accedo con $post->tags che mi restituisce una collection dei tag del post. 
                             Posso poi usare il metodo contains() per controllare se è contenuto --}}
-                            <input class="form-check-input @error('content') is-invalid @enderror" {{ $post->tags->contains($tag) ? 'checked' : '' }} type="checkbox" value="{{ $tag->id }}" name="tags[]" id="tags-{{ $tag->id }}"> 
+                            <input class="form-check-input" {{ $post->tags->contains($tag) ? 'checked' : '' }} type="checkbox" value="{{ $tag->id }}" name="tags[{{$index}}]" id="tags-{{ $tag->id }}"> 
                             {{-- Con tags-{{ $tag->id }} creo un id univoco per ogni tag.
                             Aggiungo il value che sarà il dato che mi arriva nel metodo update quando quella data input viene selezionata .
-                            Con name="tags[]" dico che name riceverà dati multipli e all'update viene inviato un array con dentro gli id dei tag selezionati. Se non avessi messo le [] allora tutti i tag sarebbero stati inviati con lo stesso name, ovvero quello dell'ulitmo tag selezionato--}}
+                            Con name="tags[{{$index}}]" gli indici dell'array tags nel controller corrisponderanno ai valori delle checkbox --}}
                             <label class="form-check-label" for="tags-{{ $tag->id }}">
                                 {{ $tag->name }}
                             </label>
+
+                            @error('tags.{{$index}}') 
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     @endforeach
-                </div>
-                @error('tags')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                </div> 
             </div>
 
             {{-- content --}}
