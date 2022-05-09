@@ -40091,15 +40091,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/front.scss":
+/*!***********************************!*\
+  !*** ./resources/sass/front.scss ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!***************************************************************!*\
-  !*** multi ./resources/js/admin.js ./resources/sass/app.scss ***!
-  \***************************************************************/
+/*!*******************************************************************************************!*\
+  !*** multi ./resources/js/admin.js ./resources/sass/app.scss ./resources/sass/front.scss ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Users/michela/Boolean-54/Progetti-Esercizi/PHP/LARAVEL/laravel-api/resources/js/admin.js */"./resources/js/admin.js");
-module.exports = __webpack_require__(/*! /Users/michela/Boolean-54/Progetti-Esercizi/PHP/LARAVEL/laravel-api/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/michela/Boolean-54/Progetti-Esercizi/PHP/LARAVEL/laravel-api/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /Users/michela/Boolean-54/Progetti-Esercizi/PHP/LARAVEL/laravel-api/resources/sass/front.scss */"./resources/sass/front.scss");
 
 
 /***/ })
