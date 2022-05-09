@@ -33,3 +33,23 @@ Route::middleware('auth')
 
     Route::resource('posts', 'PostController');
 });
+
+
+/* Using the Route::fallback method, you may define a route that will be executed when no other route matches the incoming request. 
+Quindi tutto quello che non è nelle rotte create sopra viene intercettato da questa route e restituirà sempre la stessa vista, 
+ovvero la pagina in cui vue viene montato (ecco perchè si chiamano single page application) */
+Route::fallback(function(){
+
+    return view('guest.home');
+
+});
+
+/* Altro modo per fare la stessa cosa:
+Route::get('{any?}', function(){
+
+    return view('guest.home');
+
+})->where('any','.*');
+*/
+
+
