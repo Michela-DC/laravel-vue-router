@@ -2713,11 +2713,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  beforeMount: function beforeMount() {
-    // la rotta di questa pagina deve fare una chiamata axios al server per recuperare il singolo post, ha però bisogno di ricevere lo slug per chimare un dato post
+  data: function data() {
+    return {
+      post: null //la chiamata azios salva qui il post che recupero tramite slug
+
+    };
+  },
+  beforeMount: function beforeMount() {// la rotta di questa pagina deve fare una chiamata axios al server per recuperare il singolo post, ha però bisogno di ricevere lo slug per chimare un dato post
     // per recuperare lo slug posso sfruttare una proprietà che hanno tutti i componenti, ovvero la proprietà $route, che contiene tutte le informazioni della rotta corrente,
     // $route ha una chiave params all'interno del quale trovo lo slug 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/posts/".concat(this.$route.params.slug));
+    // axios.get(`/api/posts/${ this.$route.params.slug }`)
   }
 });
 

@@ -54,9 +54,23 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $post = Post::with(['category','tags'])->where('slug', $slug)->first();
+
+        //se trova il post
+        if( $post ) {
+            return response()->json([
+                'post' => $post,
+                'success' => true, 
+            ]);
+        }
+        
+        // se non trovo il post allora devo restituire una risposta di errore
+        return response()->json([
+            'posts' => 'post not found',
+            'success' => false, 
+        ], 404); //specifico così di mandare una risposta pagina 404 di errore
     }
 
     /**
