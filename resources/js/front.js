@@ -11,9 +11,14 @@
  window.Vue = require('vue');
  import App from './views/App.vue'
 
+ import router from './router'; 
+ //non c'è bisogno di specificare index perchè quando importo qualcosa dalla cartella router, in automatico si va a cercare un file index
+
  const app = new Vue({
     el: '#root',
-    render: h => h(App) //specifico il componente root che va montato
+    render: h => h(App), //specifico il componente root che va montato
+    router,
 });
 
+ 
  
