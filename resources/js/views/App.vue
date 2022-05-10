@@ -1,10 +1,15 @@
 <template>
-    <div class="app-container bg-slate-400">
+    <div class="app-container bg-slate-500">
         <header>
-            <nav>
-                <li>Home</li>
-                <li>Posts</li>
-                <li>Categories</li>
+            <nav class="py-6 flex gap-4 bg-slate-300">
+                <li>
+                    <!-- use router-link component for navigation.
+                    Posso usarlo passando al to solo il path della rotta:
+                    <router-link to="/posts">Posts</router-link> 
+                    oppure posso passargli il nome della rotta:  -->
+                    <router-link to="{ name: 'posts.index' }">Posts</router-link>
+                    <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
+                </li>
             </nav>
         </header>
 

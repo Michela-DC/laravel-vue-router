@@ -2720,6 +2720,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -4705,7 +4710,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .app-container{\n    height: 100vh;\n} */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .app-container{\n    height: 100vh;\n} */\n", ""]);
 
 // exports
 
@@ -6063,9 +6068,21 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "app-container bg-slate-400" },
+    { staticClass: "app-container bg-slate-500" },
     [
-      _vm._m(0),
+      _c("header", [
+        _c("nav", { staticClass: "py-6 flex gap-4 bg-slate-300" }, [
+          _c(
+            "li",
+            [
+              _c("router-link", { attrs: { to: "{ name: 'posts.index' }" } }, [
+                _vm._v("Posts"),
+              ]),
+            ],
+            1
+          ),
+        ]),
+      ]),
       _vm._v(" "),
       _c("router-view"),
       _vm._v(" "),
@@ -6074,22 +6091,7 @@ var render = function () {
     1
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("header", [
-      _c("nav", [
-        _c("li", [_vm._v("Home")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Posts")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Categories")]),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -21632,6 +21634,9 @@ var routes = [{
   path: '/posts',
   name: 'posts.index',
   component: _pages_Post_index_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+}, {
+  // nel front-office per per recuperare il singolo post posso usare il suo slug, quindi lo passo come parametro alla rotta
+  path: '/posts/:slug'
 }]; //creo l'istanza del router
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
