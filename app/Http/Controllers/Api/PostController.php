@@ -15,7 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['category','tags'])->limit(12)->get();
+        $posts = Post::with(['category','tags'])
+            ->where('published_at', '!=', null) //prende i post dove published_at non è nullo
+            ->orderBy('published_at', 'desc')
+            ->paginate(12); //fa impaginazione automatica, quindi come gli ho specificato mi mette 12 post per pagina
 
         //chiamata api
         return response()->json([
