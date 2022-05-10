@@ -3,8 +3,15 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+import Posts from '../pages/Post.index.vue'
+
 //definisco l'array di rotte
-const routes = [ 
+const routes = [
+    {
+        path: '/posts',
+        name: 'posts.index',
+        component: Posts
+    },
 ];
 
 //creo l'istanza del router

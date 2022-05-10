@@ -8,7 +8,10 @@
             </nav>
         </header>
 
-        <PostGrid />
+        <!-- <PostGrid /> non serve più, ma al suo posto ci va: -->
+        <!-- route outlet -->
+        <!-- component matched by the route will render here -->
+        <router-view></router-view>
 
         <footer>
             &copy; Boolpress!
@@ -17,7 +20,7 @@
 </template>
 
 <script>
-import PostGrid from './Post.index.vue';
+import PostGrid from '../pages/Post.index.vue';
 
 export default {
     components: {
