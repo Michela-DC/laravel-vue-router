@@ -38,7 +38,7 @@
                 })
                 .catch( error => {
                     console.warn(error);
-                })
+                }) 
 
             }
         },

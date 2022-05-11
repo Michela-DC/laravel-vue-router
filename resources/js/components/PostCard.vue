@@ -13,7 +13,8 @@
             <router-link 
             class="bg-amber-500 rounded-md px-3 py-1 text-sm text-white hover:bg-orange-500" 
             tag="button" 
-            :to="{ name: 'posts.show', params:{ slug: post.slug } }">Read full post
+            :to="{ name: 'posts.show', params:{ slug: post.slug } }">
+                Read full post
             </router-link>
             <!-- la rotta posts.show vuole anche un parametro slug a cui passo lo slug che recupero da post -->
         </div>

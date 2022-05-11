@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 import Posts from '../pages/Post.index.vue'
 import Post from '../pages/Post.show.vue'
 import CategoriesArchive from '../pages/Categories.archive.vue'
+import NotFound from '../pages/404.vue'
 
 //definisco l'array di rotte
 const routes = [
@@ -17,7 +18,7 @@ const routes = [
     },
     {   
         //rotta per mostrare la pagina di dettaglio del singolo post
-        // nel front-office per per recuperare il singolo post posso usare il suo slug, quindi lo passo come parametro alla rotta
+        // nel front-office per recuperare il singolo post posso usare il suo slug, quindi lo passo come parametro alla rotta
         path: '/posts/:slug' ,
         name: 'posts.show',
         component: Post
@@ -26,6 +27,11 @@ const routes = [
         path: '/categories/:slug',
         name: 'categories.archive',
         component: CategoriesArchive
+    },
+    {   
+        // rotta di fallback che intercetta le rotte diverse da quelle definite
+        path: '/*', 
+        component: NotFound
     }
 ];
 
