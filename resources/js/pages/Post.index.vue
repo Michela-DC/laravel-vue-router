@@ -1,14 +1,13 @@
 <template>
-    <div class="container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 flex gap-4">
+    <div class="container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 flex gap-8 py-12">
         <PostCard v-for="post in posts" :key="post.id" :post="post"/>
         <!-- :post="post" mi serve per collegarlo al props in PostCard -->
 
-        <div class="container py-4">
-            <ul class="pagination flex justify-center gap-4 items-center">
+        <div class="container py-8">
+            <ul class="pagination flex justify-center gap-4">
                 <!-- assegno il colore a seconda del se è la pagina attiva o no -->
                 <li @click="fetchPosts(n)" :class="[currentPage === n ? 'bg-amber-400' : 'bg-white', 'cursor-pointer rounded-full h-10 w-10 flex items-center justify-center text-center']" v-for="n in lastPage" :key="n">{{ n }}</li>
                 <!-- quando clicco va a chiamare la funzione fetchPosts a cui passo un nuovo parametro per recuperare la pagina (il parametro n è quello che ho usato per ciclare e stampare i numeri delle pagine) -->
-                
             </ul>
         </div>
     </div>
