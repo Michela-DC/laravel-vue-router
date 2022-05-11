@@ -18,7 +18,7 @@ const routes = [
         //rotta per mostrare la pagina di dettaglio del singolo post
         // nel front-office per per recuperare il singolo post posso usare il suo slug, quindi lo passo come parametro alla rotta
         path: '/posts/:slug' ,
-        name: 'post.show',
+        name: 'posts.show',
         component: Post
     }
 ];

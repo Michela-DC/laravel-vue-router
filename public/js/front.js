@@ -2711,18 +2711,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      post: null //la chiamata azios salva qui il post che recupero tramite slug
+      post: null //la chiamata axios salva qui il post che recupero tramite slug
 
     };
   },
-  beforeMount: function beforeMount() {// la rotta di questa pagina deve fare una chiamata axios al server per recuperare il singolo post, ha però bisogno di ricevere lo slug per chimare un dato post
+  beforeMount: function beforeMount() {
+    var _this = this;
+
+    // la rotta di questa pagina deve fare una chiamata axios al server per recuperare il singolo post, ha però bisogno di ricevere lo slug per chimare un dato post
     // per recuperare lo slug posso sfruttare una proprietà che hanno tutti i componenti, ovvero la proprietà $route, che contiene tutte le informazioni della rotta corrente,
     // $route ha una chiave params all'interno del quale trovo lo slug 
-    // axios.get(`/api/posts/${ this.$route.params.slug }`)
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/posts/".concat(this.$route.params.slug)).then(function (res) {
+      var post = res.data.post;
+      _this.post = post;
+    })["catch"](function (err) {
+      console.warn(err);
+    });
   }
 });
 
@@ -17017,7 +17030,17 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "py-8" }, [
-    _vm._v("\n    " + _vm._s(_vm.$route.params.slug) + "\n"),
+    _c("div", { staticClass: "slug" }, [
+      _vm._v("Slug: " + _vm._s(_vm.$route.params.slug)),
+    ]),
+    _vm._v(" "),
+    _vm.post
+      ? _c("h1", [_vm._v("Title: " + _vm._s(_vm.post.title))])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.post
+      ? _c("p", [_vm._v(" " + _vm._s(_vm.post.content) + "}")])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
@@ -17051,7 +17074,7 @@ var render = function () {
           _c(
             "li",
             [
-              _c("router-link", { attrs: { to: "{ name: 'posts.index' }" } }, [
+              _c("router-link", { attrs: { to: { name: "posts.index" } } }, [
                 _vm._v("Posts"),
               ]),
             ],
@@ -32688,7 +32711,7 @@ var routes = [{
   //rotta per mostrare la pagina di dettaglio del singolo post
   // nel front-office per per recuperare il singolo post posso usare il suo slug, quindi lo passo come parametro alla rotta
   path: '/posts/:slug',
-  name: 'post.show',
+  name: 'posts.show',
   component: _pages_Post_show_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
 }]; //creo l'istanza del router
 
