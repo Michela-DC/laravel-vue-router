@@ -6,6 +6,7 @@ Vue.use(VueRouter)
 
 import Posts from '../pages/Post.index.vue'
 import Post from '../pages/Post.show.vue'
+import CategoriesArchive from '../pages/Categories.archive.vue'
 
 //definisco l'array di rotte
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
         path: '/posts/:slug' ,
         name: 'posts.show',
         component: Post
+    },
+    {
+        path: '/categories/:slug',
+        name: 'categories.archive',
+        component: CategoriesArchive
     }
 ];
 

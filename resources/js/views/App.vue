@@ -1,5 +1,5 @@
 <template>
-    <div class="app-container bg-slate-500 h-screen overflow-y-auto">
+    <div class="app-container bg-slate-400 h-screen overflow-y-auto">
         <header>
             <nav class="py-6 flex bg-slate-300">
                 <div class="container">

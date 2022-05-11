@@ -26,6 +26,11 @@ Route::namespace('Api')->group(function() {
     Route::resource('posts', 'PostController')->only([
         'index', 'show',
     ]);
+
+    Route::get('/categories', 'CategoryController@index');
+
+    Route::get('/categories/{category}/posts', 'CategoryController@archive');
+    // archive è un metodo in CategoryController che abbiamo creato in più oltre a quelli di base
 });
 
 
