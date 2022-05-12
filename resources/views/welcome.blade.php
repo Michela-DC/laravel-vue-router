@@ -58,10 +58,31 @@
                 text-transform: uppercase;
             }
 
-            .m-b-md {
+            .m-b-md, .links {
                 margin-bottom: 30px;
             }
+
+            .links{
+                margin-bottom: 25px
+            }
+
+            .post-route{
+                font-size: 2.5em;
+                color: red;
+                cursor: pointer;
+                display: inline-block
+            }
+            
+            .post-route > a{
+                color: inherit;
+                text-decoration: none;
+            }
+            .post-route:hover{
+                color: limegreen;
+            }
+
         </style>
+        
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -95,9 +116,9 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
 
-                <div>
-                    <a href="">Posts</a>
-                </div>
+                <h2 class="post-route">
+                    <a href="{{ route('posts.home') }}">Go to Posts</a>
+                </h2>
             </div>
         </div>
     </body>

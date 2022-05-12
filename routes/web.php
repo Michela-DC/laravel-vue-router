@@ -43,7 +43,6 @@ Route::fallback(function(){
     return view('guest.home');
 
 });
-
 /* Altro modo per fare la stessa cosa:
 Route::get('{any?}', function(){
 
@@ -51,5 +50,12 @@ Route::get('{any?}', function(){
 
 })->where('any','.*');
 */
+
+//rotta che mi ritorna il file home.blade.php nella cartella guest, ovvero la pagina con tutti i post
+Route::get('/posts', function () {
+
+    return view('guest.home');
+
+})->name('posts.home');
 
 

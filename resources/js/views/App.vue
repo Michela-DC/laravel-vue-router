@@ -3,12 +3,12 @@
         <header>
             <nav class="py-6 flex bg-slate-300">
                 <div class="container">
-                    <li class="uppercase hover:text-orange-500">
+                    <li class="uppercase">
                         <!-- use router-link component for navigation.
                         Posso usarlo passando al to solo il path della rotta:
                         <router-link to="/posts">Posts</router-link> 
                         oppure posso passargli il nome della rotta:  -->
-                        <router-link class="font-bold text-red-500" :to="{ name: 'posts.index' }">Show all Posts</router-link>
+                        <router-link class="font-bold text-red-500 hover:text-orange-400" :to="{ name: 'posts.index' }">Show all Posts</router-link>
                         <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
                     </li>
                 </div>

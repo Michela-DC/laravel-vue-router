@@ -6,7 +6,8 @@
 
         <div class="card-container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 flex gap-8 py-5">
             <div class="card-body bg-slate-300 rounded-md overflow-hidden shadow-md shadow-slate-500" 
-            tag="li" v-for="post in posts" :key="post.id">
+                tag="li" v-for="post in posts" :key="post.id">
+
                 <figure class="img-wrapper">
                     <img src="https://picsum.photos/450/250" class="w-full object-cover" alt="">
                 </figure>
@@ -19,9 +20,8 @@
                         </li>
                     </ul>
 
-                    <router-link :to="{name: 'posts.show', params: {slug:post.slug} }" 
-                    class="bg-amber-500 rounded-md px-3 py-1 text-md text-white hover:bg-orange-500" 
-                    tag="button">
+                    <router-link :to="{name: 'posts.show', params: {slug:post.slug} }" tag="button" 
+                        class="bg-amber-500 rounded-md px-3 py-1 text-md text-white hover:bg-orange-500">
                         Read full post
                     </router-link>
                 </div>

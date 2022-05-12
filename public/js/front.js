@@ -16855,12 +16855,12 @@ var render = function () {
           _c("div", { staticClass: "container" }, [
             _c(
               "li",
-              { staticClass: "uppercase hover:text-orange-500" },
+              { staticClass: "uppercase" },
               [
                 _c(
                   "router-link",
                   {
-                    staticClass: "font-bold text-red-500",
+                    staticClass: "font-bold text-red-500 hover:text-orange-400",
                     attrs: { to: { name: "posts.index" } },
                   },
                   [_vm._v("Show all Posts")]

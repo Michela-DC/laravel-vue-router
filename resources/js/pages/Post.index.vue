@@ -5,8 +5,8 @@
 
             <ul class="flex gap-4 items-center flex-wrap">
                 <router-link :to="{ name:'categories.archive', params:{slug:category.slug} }" 
-                tag="li" v-for="category in categories" :key="category.id" 
-                class="px-3 py-1 rounded-full text-sm whitespace-nowrap bg-white cursor-pointer">
+                    tag="li" v-for="category in categories" :key="category.id" 
+                    class="px-3 py-1 rounded-full text-sm whitespace-nowrap bg-white cursor-pointer">
                     {{ category.name }}
                 </router-link>
             </ul>
