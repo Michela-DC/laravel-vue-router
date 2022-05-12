@@ -1,15 +1,21 @@
 <template>
-    <div>
-        <div class="container pt-10">
+    <div class="container">
+        <div class="pt-10">
+            <h5 class="py-5 text-xl font-bold uppercase">Choose a category:</h5>
+
             <ul class="flex gap-4 items-center flex-wrap">
-                
-                <router-link :to="{ name:'categories.archive', params:{slug:category.slug} }" tag="li" v-for="category in categories" :key="category.id" class="px-3 py-1 rounded-full text-sm whitespace-nowrap border border-white cursor-pointer">
+                <router-link :to="{ name:'categories.archive', params:{slug:category.slug} }" 
+                tag="li" v-for="category in categories" :key="category.id" 
+                class="px-3 py-1 rounded-full text-sm whitespace-nowrap bg-white cursor-pointer">
                     {{ category.name }}
                 </router-link>
             </ul>
         </div>
 
-        <div class="container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 flex gap-8 py-12">
+        <div class="pt-12">
+            <h1 class="text-2xl font-bold uppercase">All Posts:</h1>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 flex gap-8 py-5">
             <PostCard v-for="post in posts" :key="post.id" :post="post"/>
             <!-- :post="post" mi serve per collegarlo al props in PostCard -->
 
@@ -22,11 +28,11 @@
             </div>
             
         </div>
-
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 import PostCard from '../components/PostCard.vue'
 
     export default {

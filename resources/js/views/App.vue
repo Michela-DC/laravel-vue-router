@@ -8,7 +8,7 @@
                         Posso usarlo passando al to solo il path della rotta:
                         <router-link to="/posts">Posts</router-link> 
                         oppure posso passargli il nome della rotta:  -->
-                        <router-link :to="{ name: 'posts.index' }">Posts</router-link>
+                        <router-link class="font-bold text-red-500" :to="{ name: 'posts.index' }">Show all Posts</router-link>
                         <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
                     </li>
                 </div>

@@ -1,15 +1,33 @@
 <template>
-    <div>
+    <div class="container py-12">
         <!-- pagina archivio della categoria -->
-        <h1 v-if="category"> {{ category.name }} </h1>
-        <ul class="flex flex-col items-start">
-            <router-link tag="li" v-for="post in posts" :key="post.id" 
-            :to="{name: 'posts.show', params: {slug:post.slug} }" 
-            class="cursor-pointer py-4 hover:text-orange-300">
-                Post title:  {{post.title}}
-            </router-link>
-        </ul>
-        <!-- {{ posts.length }} -->
+
+        <h1 v-if="category" class="pb-6 uppercase font-bold text-2xl text-center"> {{ category.name }} </h1>
+
+        <div class="card-container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 flex gap-8 py-5">
+            <div class="card-body bg-slate-300 rounded-md overflow-hidden shadow-md shadow-slate-500" 
+            tag="li" v-for="post in posts" :key="post.id">
+                <figure class="img-wrapper">
+                    <img src="https://picsum.photos/450/250" class="w-full object-cover" alt="">
+                </figure>
+                
+                <div class="card-content p-5">
+                    <ul class="pb-5">
+                        <li>
+                            <span class="font-bold">Title: </span> 
+                            {{post.title}}
+                        </li>
+                    </ul>
+
+                    <router-link :to="{name: 'posts.show', params: {slug:post.slug} }" 
+                    class="bg-amber-500 rounded-md px-3 py-1 text-md text-white hover:bg-orange-500" 
+                    tag="button">
+                        Read full post
+                    </router-link>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </template>
 
@@ -40,7 +58,7 @@
                     console.warn(error);
                 }) 
 
-            }
+            },
         },
 
         beforeMount() { //in questo caso potevo chiamre la funzione anche nel mount

@@ -2613,6 +2613,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     post: {
@@ -2668,6 +2677,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2708,7 +2735,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_PostCard_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/PostCard.vue */ "./resources/js/components/PostCard.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_PostCard_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/PostCard.vue */ "./resources/js/components/PostCard.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2738,9 +2772,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PostCard: _components_PostCard_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    PostCard: _components_PostCard_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -2757,7 +2792,7 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       //di default la pagina che recupera è la 1
       //gli passo la rotta che ho creato per i post del front-office
-      axios.get('/api/posts', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/posts', {
         params: {
           //gli passo il parametro page
           page: page
@@ -2778,7 +2813,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchCategories: function fetchCategories() {
       var _this2 = this;
 
-      axios.get('/api/categories').then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/categories').then(function (res) {
         var categories = res.data.categories;
         _this2.categories = categories;
       });
@@ -2825,6 +2860,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2850,7 +2893,7 @@ __webpack_require__.r(__webpack_exports__);
         // Inside of a Vue instance, you have access to the router instance as $router. You can therefore call this.$router.push.
         // in pratica this.$router è il const router che ho istanziato in index.js
 
-        _this.$router.pish('/404'); //quindi nella pagina 404 ci finirò anche in caso di abbia ricevuto una risposta positiva dal server
+        _this.$router.pish('/404'); //quindi nella pagina 404 ci finirò anche nel caso in cui non abbia ricevuto una risposta positiva dal server
 
       }); // il catch viene intercettato perchè nel controller, nella chiamata json, ho specificato l'errore 404
       //se non specificassi il 404 e non mettessi niente allora il catch non verebbe eseguito perchè axios vedrebbe una risposta 200, quindi una chiamata andata a buon fine
@@ -16366,30 +16409,46 @@ var render = function () {
     "div",
     {
       staticClass:
-        "card post flex flex-col border-2 border-slate-300 rounded-md overflow-hidden shadow-md shadow-slate-200",
+        "card post flex flex-col border-4 border-slate-300 rounded-md overflow-hidden shadow-md shadow-slate-500",
     },
     [
       _vm._m(0),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "card-content p-4 flex-1" },
+        { staticClass: "card-content p-4" },
         [
-          _c("h4", { staticClass: "card-title" }, [
-            _vm._v("Title: " + _vm._s(_vm.post.title)),
+          _c("h4", { staticClass: "card-title pb-2 text-lg" }, [
+            _c("span", { staticClass: "font-bold" }, [_vm._v("Title: ")]),
+            _vm._v("\n            " + _vm._s(_vm.post.title) + "\n        "),
           ]),
           _vm._v(" "),
           _vm.post.category
-            ? _c("p", [_vm._v("Category: " + _vm._s(_vm.post.category.name))])
+            ? _c("p", [
+                _c("span", { staticClass: "font-bold" }, [
+                  _vm._v("Category: "),
+                ]),
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.post.category.name) +
+                    "\n        "
+                ),
+              ])
             : _vm._e(),
           _vm._v(" "),
           _c(
             "ul",
-            { staticClass: "tags pb-4" },
+            { staticClass: "tags py-4 flex gap-1" },
             _vm._l(_vm.post.tags, function (tag) {
-              return _c("li", { key: tag.id, staticClass: "tag" }, [
-                _vm._v("Tag: " + _vm._s(tag.name)),
-              ])
+              return _c(
+                "li",
+                {
+                  key: tag.id,
+                  staticClass:
+                    "tag bg-cyan-200 text-blue-900 text-xs rounded-full px-3 py-1",
+                },
+                [_vm._v(_vm._s(tag.name))]
+              )
             }),
             0
           ),
@@ -16485,37 +16544,89 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "container py-12" }, [
     _vm.category
-      ? _c("h1", [_vm._v(" " + _vm._s(_vm.category.name) + " ")])
+      ? _c(
+          "h1",
+          { staticClass: "pb-6 uppercase font-bold text-2xl text-center" },
+          [_vm._v(" " + _vm._s(_vm.category.name) + " ")]
+        )
       : _vm._e(),
     _vm._v(" "),
     _c(
-      "ul",
-      { staticClass: "flex flex-col items-start" },
+      "div",
+      {
+        staticClass:
+          "card-container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 flex gap-8 py-5",
+      },
       _vm._l(_vm.posts, function (post) {
         return _c(
-          "router-link",
+          "div",
           {
             key: post.id,
-            staticClass: "cursor-pointer py-4 hover:text-orange-300",
-            attrs: {
-              tag: "li",
-              to: { name: "posts.show", params: { slug: post.slug } },
-            },
+            staticClass:
+              "card-body bg-slate-300 rounded-md overflow-hidden shadow-md shadow-slate-500",
+            attrs: { tag: "li" },
           },
           [
-            _vm._v(
-              "\n            Post title:  " + _vm._s(post.title) + "\n        "
+            _vm._m(0, true),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-content p-5" },
+              [
+                _c("ul", { staticClass: "pb-5" }, [
+                  _c("li", [
+                    _c("span", { staticClass: "font-bold" }, [
+                      _vm._v("Title: "),
+                    ]),
+                    _vm._v(
+                      " \n                        " +
+                        _vm._s(post.title) +
+                        "\n                    "
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass:
+                      "bg-amber-500 rounded-md px-3 py-1 text-md text-white hover:bg-orange-500",
+                    attrs: {
+                      to: { name: "posts.show", params: { slug: post.slug } },
+                      tag: "button",
+                    },
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Read full post\n                "
+                    ),
+                  ]
+                ),
+              ],
+              1
             ),
           ]
         )
       }),
-      1
+      0
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("figure", { staticClass: "img-wrapper" }, [
+      _c("img", {
+        staticClass: "w-full object-cover",
+        attrs: { src: "https://picsum.photos/450/250", alt: "" },
+      }),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -16537,8 +16648,12 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "container pt-10" }, [
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "pt-10" }, [
+      _c("h5", { staticClass: "py-5 text-xl font-bold uppercase" }, [
+        _vm._v("Choose a category:"),
+      ]),
+      _vm._v(" "),
       _c(
         "ul",
         { staticClass: "flex gap-4 items-center flex-wrap" },
@@ -16548,7 +16663,7 @@ var render = function () {
             {
               key: category.id,
               staticClass:
-                "px-3 py-1 rounded-full text-sm whitespace-nowrap border border-white cursor-pointer",
+                "px-3 py-1 rounded-full text-sm whitespace-nowrap bg-white cursor-pointer",
               attrs: {
                 to: {
                   name: "categories.archive",
@@ -16568,11 +16683,13 @@ var render = function () {
       ),
     ]),
     _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
     _c(
       "div",
       {
         staticClass:
-          "container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 flex gap-8 py-12",
+          "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 flex gap-8 py-5",
       },
       [
         _vm._l(_vm.posts, function (post) {
@@ -16609,7 +16726,18 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pt-12" }, [
+      _c("h1", { staticClass: "text-2xl font-bold uppercase" }, [
+        _vm._v("All Posts:"),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -16631,32 +16759,59 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "py-8" }, [
-    !_vm.loading
-      ? _c("div", { staticClass: "slug container" }, [
+  return !_vm.loading
+    ? _c(
+        "div",
+        {
+          staticClass:
+            "slug container my-12 rounded-md bg-slate-200 overflow-hidden shadow-lg shadow-slate-500",
+        },
+        [
           _c("img", {
             staticClass: "w-full object-cover",
             attrs: { src: "https://picsum.photos/850/350", alt: "" },
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "container post-content" }, [
+          _c("div", { staticClass: "container post-content p-10" }, [
             _vm.post
-              ? _c("h1", [_vm._v("Title: " + _vm._s(_vm.post.title))])
+              ? _c("h1", { staticClass: "pb-4" }, [
+                  _c("span", { staticClass: "font-bold" }, [_vm._v("Title: ")]),
+                  _vm._v(
+                    " \n            " + _vm._s(_vm.post.title) + "\n        "
+                  ),
+                ])
               : _vm._e(),
             _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.post.category))]),
+            _vm.post.category
+              ? _c("p", [
+                  _c("span", { staticClass: "font-bold" }, [
+                    _vm._v("Category: "),
+                  ]),
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.post.category.name) +
+                      "\n        "
+                  ),
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "ul",
-              { staticClass: "flex gap-3 italic after:content-[',']" },
+              { staticClass: "tags pb-4 flex gap-1" },
               _vm._l(_vm.post.tags, function (tag) {
-                return _c("li", { key: tag.id }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(tag.name) +
-                      "\n                "
-                  ),
-                ])
+                return _c(
+                  "li",
+                  {
+                    key: tag.id,
+                    staticClass:
+                      "flex gap-3 italic tag bg-cyan-200 text-blue-900 text-xs rounded-full px-3 py-1",
+                  },
+                  [
+                    _vm._v(
+                      "\n                " + _vm._s(tag.name) + "\n            "
+                    ),
+                  ]
+                )
               }),
               0
             ),
@@ -16665,9 +16820,9 @@ var render = function () {
               ? _c("p", [_vm._v(" " + _vm._s(_vm.post.content) + "}")])
               : _vm._e(),
           ]),
-        ])
-      : _vm._e(),
-  ])
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -16702,9 +16857,14 @@ var render = function () {
               "li",
               { staticClass: "uppercase hover:text-orange-500" },
               [
-                _c("router-link", { attrs: { to: { name: "posts.index" } } }, [
-                  _vm._v("Posts"),
-                ]),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "font-bold text-red-500",
+                    attrs: { to: { name: "posts.index" } },
+                  },
+                  [_vm._v("Show all Posts")]
+                ),
               ],
               1
             ),

@@ -1,28 +1,37 @@
 <template>
-    <div class="py-8">
-        <!-- solo quando loading è diverso da false, quindi la chiamata avrà già ricevuto il post, allora avrò la visualizzaione del post -->
-        <!-- oppure potevo anche fare v-if=post -->
-        <div v-if="!loading" class="slug container">
-            <img src="https://picsum.photos/850/350" class="w-full object-cover" alt="">
+    <!-- solo quando loading è diverso da false, quindi la chiamata avrà già ricevuto il post, allora avrò la visualizzaione del post -->
+    <!-- oppure potevo anche fare v-if=post -->
+    <div v-if="!loading" class="slug container my-12 rounded-md bg-slate-200 overflow-hidden shadow-lg shadow-slate-500">
+        <img src="https://picsum.photos/850/350" class="w-full object-cover" alt="">
 
-            <div class="container post-content">
-                <h1 v-if="post">Title: {{ post.title }}</h1>
-                <p>{{ post.category }}</p>
-                <ul class="flex gap-3 italic after:content-[',']">
-                    <li v-for="tag in post.tags" :key="tag.id">
-                        {{ tag.name }}
-                    </li>
-                </ul>
-                <p v-if="post"> {{ post.content }}}</p>
-            </div>
+        <div class="container post-content p-10">
+            <h1 v-if="post" class="pb-4">
+                <span class="font-bold">Title: </span> 
+                {{ post.title }}
+            </h1>
+
+            <p v-if="post.category">
+                <span class="font-bold">Category: </span>
+                {{ post.category.name }}
+            </p>
+
+            <ul class="tags pb-4 flex gap-1">
+                <li v-for="tag in post.tags" :key="tag.id" class="flex gap-3 italic tag bg-cyan-200 text-blue-900 text-xs rounded-full px-3 py-1">
+                    {{ tag.name }}
+                </li>
+            </ul>
+
+            <p v-if="post"> {{ post.content }}}</p>
         </div>
     </div>
+
 </template>
 
 <script>
 import axios from 'axios'
 
 export default {
+    
     data() {
         return {
             post: null, //la chiamata axios salva qui il post che recupero tramite slug
@@ -50,7 +59,7 @@ export default {
                 // Inside of a Vue instance, you have access to the router instance as $router. You can therefore call this.$router.push.
                 // in pratica this.$router è il const router che ho istanziato in index.js
                 this.$router.pish('/404'); 
-                //quindi nella pagina 404 ci finirò anche in caso di abbia ricevuto una risposta positiva dal server
+                //quindi nella pagina 404 ci finirò anche nel caso in cui non abbia ricevuto una risposta positiva dal server
 
             }) // il catch viene intercettato perchè nel controller, nella chiamata json, ho specificato l'errore 404
             //se non specificassi il 404 e non mettessi niente allora il catch non verebbe eseguito perchè axios vedrebbe una risposta 200, quindi una chiamata andata a buon fine
